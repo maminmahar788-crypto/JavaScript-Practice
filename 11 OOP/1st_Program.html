@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <script>
+       class BankAccount {
+    #balance;
+
+    constructor(owner, balance = 0) {
+        if (balance < 0) {
+            throw new Error("Balance cannot be negative.");
+        }
+
+        this.owner = owner;
+        this.#balance = balance;
+    }
+
+    deposit(amount) {
+        if (amount <= 0) {
+            console.log("Deposit must be positive.");
+            return;
+        }
+
+        this.#balance += amount;
+
+        console.log(`Deposited: ${amount}`);
+    }
+
+    withdraw(amount) {
+        if (amount <= 0) {
+            console.log("Withdrawal must be positive.");
+            return;
+        }
+
+        if (amount > this.#balance) {
+            console.log("Insufficient balance.");
+            return;
+        }
+
+        this.#balance -= amount;
+
+        console.log(`Withdrawn: ${amount}`);
+    }
+
+    get balance() {
+        return this.#balance;
+    }
+
+    displayInfo() {
+        console.log(`Owner: ${this.owner}`);
+        console.log(`Balance: ${this.#balance}`);
+    }
+}
+
+class SavingsAccount extends BankAccount {
+    constructor(owner, balance, interestRate) {
+        super(owner, balance);
+
+        this.interestRate = interestRate;
+    }
+
+    addInterest() {
+        const interest = this.balance * this.interestRate / 100;
+
+        this.deposit(interest);
+    }
+
+    displayInfo() {
+        super.displayInfo();
+
+        console.log(`Interest rate: ${this.interestRate}%`);
+    }
+}
+
+const account1 = new BankAccount("Ali", 1000);
+
+account1.deposit(500);
+account1.withdraw(200);
+account1.displayInfo();
+
+console.log("---------------");
+
+const savings = new SavingsAccount("Ahmed", 2000, 5);
+
+savings.addInterest();
+savings.displayInfo();
+      </script>
+</body>
+</html>

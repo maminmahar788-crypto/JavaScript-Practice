@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       class BankAccount {
+    #balance = 0;
+
+    constructor(owner, initialBalance = 0) {
+        this.owner = owner;
+
+        if (initialBalance < 0) {
+            throw new Error("Initial balance cannot be negative.");
+        }
+
+        this.#balance = initialBalance;
+    }
+
+    deposit(amount) {
+        if (amount <= 0) {
+            console.log("Deposit must be positive.");
+            return;
+        }
+
+        this.#balance += amount;
+
+        console.log(`Deposited: ${amount}`);
+    }
+
+    getBalance() {
+        return this.#balance;
+    }
+}
+
+const account = new BankAccount("Ali", 1000);
+
+account.deposit(500);
+
+console.log(account.getBalance());
+    </script>
+</body>
+</html>
